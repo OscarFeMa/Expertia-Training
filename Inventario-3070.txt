@@ -1,0 +1,101 @@
+$ErrorActionPreference = "SilentlyContinue"
+
+Write-Host "`n========== SISTEMA ==========" -ForegroundColor Cyan
+Get-CimInstance Win32_ComputerSystem |
+    Select-Object Manufacturer, Model, TotalPhysicalMemory |
+    Format-List
+
+Get-CimInstance Win32_OperatingSystem |
+    Select-Object Caption, Version, BuildNumber, OSArchitecture, LastBootUpTime |
+    Format-List
+
+Write-Host "`n========== CPU ==========" -ForegroundColor Cyan
+Get-CimInstance Win32_Processor |
+    Select-Object Name, NumberOfCores, NumberOfLogicalProcessors, MaxClockSpeed, L2CacheSize, L3CacheSize |
+    Format-List
+
+Write-Host "`n========== GPU ==========" -ForegroundColor Cyan
+Get-CimInstance Win32_VideoController |
+    Select-Object Name, AdapterRAM, DriverVersion, VideoProcessor, CurrentHorizontalResolution, CurrentVerticalResolution |
+    Format-List
+
+Write-Host "`n========== RAM ==========" -ForegroundColor Cyan
+Get-CimInstance Win32_PhysicalMemory |
+    Select-Object Manufacturer, PartNumber, Capacity, Speed, ConfiguredClockSpeed, DeviceLocator |
+    Format-Table -AutoSize
+
+Write-Host "`n========== DISCOS ==========" -ForegroundColor Cyan
+Get-CimInstance Win32_DiskDrive |
+    Select-Object Model, InterfaceType, MediaType, Size |
+    Format-Table -AutoSize
+
+Write-Host "`n========== PARTICIONES ==========" -ForegroundColor Cyan
+Get-CimInstance Win32_LogicalDisk |
+    Select-Object DeviceID, VolumeName, FileSystem,
+        @{N="SizeGB";E={[math]::Round($_.Size/1GB,1)}},
+        @{N="FreeGB";E={[math]::Round($_.FreeSpace/1GB,1)}} |
+    Format-Table -AutoSize
+
+Write-Host "`n========== RED ==========" -ForegroundColor Cyan
+Get-NetAdapter |
+    Where-Object {$_.Status -eq "Up"} |
+    Select-Object Name, InterfaceDescription, LinkSpeed, MacAddress |
+    Format-Table -AutoSize
+
+Write-Host "`n========== IP ==========" -ForegroundColor Cyan
+Get-NetIPConfiguration |
+    Where-Object {$_.NetAdapter.Status -eq "Up"} |
+    Select-Object InterfaceAlias, IPv4Address, IPv4DefaultGateway, DNSServer |
+    Format-List
+
+Write-Host "`n========== NVIDIA / CUDA ==========" -ForegroundColor Cyan
+if (Get-Command nvidia-smi -ErrorAction SilentlyContinue) {
+    nvidia-smi --query-gpu=name,memory.total,memory.used,memory.free,driver_version,power.limit,temperature.gpu,utilization.gpu --format=csv
+    Write-Host "`n--- CUDA ---" -ForegroundColor DarkCyan
+    nvidia-smi | Select-String "CUDA Version"
+}
+else {
+    Write-Host "nvidia-smi no disponible"
+}
+
+Write-Host "`n========== SOFTWARE IA ==========" -ForegroundColor Cyan
+
+$tools = @(
+    "ollama",
+    "lmstudio",
+    "jan",
+    "python",
+    "git",
+    "docker",
+    "node",
+    "npm"
+)
+
+foreach ($tool in $tools) {
+    $cmd = Get-Command $tool -ErrorAction SilentlyContinue
+    if ($cmd) {
+        Write-Host "`n[$tool] $($cmd.Source)"
+        try {
+            & $tool --version 2>&1 | Select-Object -First 2
+        } catch {}
+    }
+}
+
+Write-Host "`n========== OLLAMA ==========" -ForegroundColor Cyan
+if (Get-Command ollama -ErrorAction SilentlyContinue) {
+    ollama list
+}
+
+Write-Host "`n========== SERVICIOS RELACIONADOS ==========" -ForegroundColor Cyan
+Get-Service |
+    Where-Object {
+        $_.Name -match "ollama|docker|lmstudio|jan" -or
+        $_.DisplayName -match "ollama|docker|lmstudio|jan"
+    } |
+    Select-Object Status, Name, DisplayName |
+    Format-Table -AutoSize
+
+Write-Host "`n========== VIRTUALIZACION ==========" -ForegroundColor Cyan
+systeminfo.exe | Select-String "Hyper-V Requirements","Virtualization"
+
+Write-Host "`n========== FIN ==========" -ForegroundColor Green

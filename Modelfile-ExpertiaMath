@@ -1,0 +1,5 @@
+FROM D:\proyectos\expertia\training\merged\expertia-math-fp16
+PARAMETER temperature 0.1
+PARAMETER top_p 0.9
+PARAMETER num_ctx 8192
+SYSTEM "Eres ExpertiaMath, matematico puro. Responde solo con definicion formal y formula. Sin opinion web."

@@ -1,0 +1,290 @@
+[
+ {
+  "label": "A01",
+  "domain": "SoftwareEngineering",
+  "era": "pre",
+  "pkg_id": 907045512
+ },
+ {
+  "label": "A02",
+  "domain": "SoftwareEngineering",
+  "era": "pre",
+  "pkg_id": 907024422
+ },
+ {
+  "label": "A03",
+  "domain": "Chemistry",
+  "era": "pre",
+  "pkg_id": 907044109
+ },
+ {
+  "label": "A04",
+  "domain": "Physics",
+  "era": "pre",
+  "pkg_id": 907059853
+ },
+ {
+  "label": "A05",
+  "domain": "SoftwareEngineering",
+  "era": "post",
+  "pkg_id": 907196435
+ },
+ {
+  "label": "A06",
+  "domain": "Physics",
+  "era": "pre",
+  "pkg_id": 907042637
+ },
+ {
+  "label": "A07",
+  "domain": "Chemistry",
+  "era": "post",
+  "pkg_id": 907200101
+ },
+ {
+  "label": "A08",
+  "domain": "Physics",
+  "era": "post",
+  "pkg_id": 907198856
+ },
+ {
+  "label": "A09",
+  "domain": "Chemistry",
+  "era": "post",
+  "pkg_id": 907199871
+ },
+ {
+  "label": "A10",
+  "domain": "Chemistry",
+  "era": "pre",
+  "pkg_id": 907044558
+ },
+ {
+  "label": "A11",
+  "domain": "Physics",
+  "era": "post",
+  "pkg_id": 907174236
+ },
+ {
+  "label": "A12",
+  "domain": "Physics",
+  "era": "pre",
+  "pkg_id": 907042477
+ },
+ {
+  "label": "A13",
+  "domain": "SoftwareEngineering",
+  "era": "pre",
+  "pkg_id": 907022305
+ },
+ {
+  "label": "A14",
+  "domain": "SoftwareEngineering",
+  "era": "post",
+  "pkg_id": 907200131
+ },
+ {
+  "label": "A15",
+  "domain": "Physics",
+  "era": "pre",
+  "pkg_id": 907050187
+ },
+ {
+  "label": "A16",
+  "domain": "Chemistry",
+  "era": "post",
+  "pkg_id": 907189579
+ },
+ {
+  "label": "A17",
+  "domain": "SoftwareEngineering",
+  "era": "pre",
+  "pkg_id": 907045377
+ },
+ {
+  "label": "A18",
+  "domain": "Physics",
+  "era": "pre",
+  "pkg_id": 907042825
+ },
+ {
+  "label": "A19",
+  "domain": "Physics",
+  "era": "post",
+  "pkg_id": 907199387
+ },
+ {
+  "label": "A20",
+  "domain": "Chemistry",
+  "era": "pre",
+  "pkg_id": 907043919
+ },
+ {
+  "label": "A21",
+  "domain": "Physics",
+  "era": "pre",
+  "pkg_id": 907050120
+ },
+ {
+  "label": "A22",
+  "domain": "Chemistry",
+  "era": "pre",
+  "pkg_id": 907051727
+ },
+ {
+  "label": "A23",
+  "domain": "Chemistry",
+  "era": "pre",
+  "pkg_id": 907051588
+ },
+ {
+  "label": "A24",
+  "domain": "SoftwareEngineering",
+  "era": "pre",
+  "pkg_id": 907024710
+ },
+ {
+  "label": "A25",
+  "domain": "Chemistry",
+  "era": "pre",
+  "pkg_id": 907052201
+ },
+ {
+  "label": "A26",
+  "domain": "SoftwareEngineering",
+  "era": "post",
+  "pkg_id": 907200272
+ },
+ {
+  "label": "A27",
+  "domain": "SoftwareEngineering",
+  "era": "post",
+  "pkg_id": 907174518
+ },
+ {
+  "label": "A28",
+  "domain": "Chemistry",
+  "era": "post",
+  "pkg_id": 907199539
+ },
+ {
+  "label": "A29",
+  "domain": "SoftwareEngineering",
+  "era": "post",
+  "pkg_id": 907170817
+ },
+ {
+  "label": "A30",
+  "domain": "Chemistry",
+  "era": "post",
+  "pkg_id": 907196577
+ },
+ {
+  "label": "A31",
+  "domain": "Physics",
+  "era": "post",
+  "pkg_id": 907188957
+ },
+ {
+  "label": "A32",
+  "domain": "Physics",
+  "era": "pre",
+  "pkg_id": 907043206
+ },
+ {
+  "label": "A33",
+  "domain": "SoftwareEngineering",
+  "era": "post",
+  "pkg_id": 907189005
+ },
+ {
+  "label": "A34",
+  "domain": "SoftwareEngineering",
+  "era": "pre",
+  "pkg_id": 907023975
+ },
+ {
+  "label": "A35",
+  "domain": "Physics",
+  "era": "post",
+  "pkg_id": 907189360
+ },
+ {
+  "label": "A36",
+  "domain": "Chemistry",
+  "era": "post",
+  "pkg_id": 907199985
+ },
+ {
+  "label": "A37",
+  "domain": "SoftwareEngineering",
+  "era": "pre",
+  "pkg_id": 907024216
+ },
+ {
+  "label": "A38",
+  "domain": "Physics",
+  "era": "post",
+  "pkg_id": 907199164
+ },
+ {
+  "label": "A39",
+  "domain": "Chemistry",
+  "era": "pre",
+  "pkg_id": 907052072
+ },
+ {
+  "label": "A40",
+  "domain": "SoftwareEngineering",
+  "era": "pre",
+  "pkg_id": 907054096
+ },
+ {
+  "label": "A41",
+  "domain": "Physics",
+  "era": "pre",
+  "pkg_id": 907059697
+ },
+ {
+  "label": "A42",
+  "domain": "Chemistry",
+  "era": "post",
+  "pkg_id": 907196558
+ },
+ {
+  "label": "A43",
+  "domain": "Physics",
+  "era": "post",
+  "pkg_id": 907196484
+ },
+ {
+  "label": "A44",
+  "domain": "Physics",
+  "era": "post",
+  "pkg_id": 907189292
+ },
+ {
+  "label": "A45",
+  "domain": "Chemistry",
+  "era": "post",
+  "pkg_id": 907199696
+ },
+ {
+  "label": "A46",
+  "domain": "Chemistry",
+  "era": "pre",
+  "pkg_id": 907044071
+ },
+ {
+  "label": "A47",
+  "domain": "SoftwareEngineering",
+  "era": "post",
+  "pkg_id": 907171382
+ },
+ {
+  "label": "A48",
+  "domain": "SoftwareEngineering",
+  "era": "post",
+  "pkg_id": 907170643
+ }
+]

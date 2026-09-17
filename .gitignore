@@ -1,0 +1,30 @@
+# Artefactos pesados: viven en disco y en HuggingFace, NO en git
+merged/
+base/
+offload/
+.venv-train/
+adapters/
+*.safetensors
+*.pt
+*.pth
+*.bin
+datasets/*.jsonl
+datasets/physics_raw/
+logs/
+incoming_3070/
+*.log
+*.err.log
+*.done
+
+# Secretos y operaciones solo-locales (nunca commitear)
+Acceso expertia.cmd
+Acceso expertia.ps1
+enable-remote-3070.ps1
+cred.xml
+*.xml
+
+# Python / Windows
+__pycache__/
+*.pyc
+Thumbs.db
+Desktop.ini
