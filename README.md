@@ -41,7 +41,7 @@ falla, el modelo no sale. Sin excepciones.*
 |---|---|---|
 | Tooling (este repo) | aquí | ✅ |
 | Pesos Q4 + adapters | [HuggingFace](https://huggingface.co/OscarFeMa) (`Expertia*-Q4`, `*-r16`) | ❌ (50MB–8GB) |
-| Datasets `*-puro.jsonl` | disco + HF (próximamente) | ❌ (45MB c/u) |
+| Datasets `*-puro.jsonl` | [expertia-domain-datasets](https://huggingface.co/datasets/OscarFeMa/expertia-domain-datasets) | ❌ (45MB c/u) |
 | Checkpoints, logs, `merged/`, `base/` | solo disco | ❌ (ver `.gitignore`) |
 
 Modelos verificados hoy:
