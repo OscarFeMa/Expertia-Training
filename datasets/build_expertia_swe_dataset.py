@@ -1,6 +1,7 @@
 import argparse
 import json
 import random
+import re
 import sqlite3
 import sys
 from pathlib import Path
@@ -20,9 +21,32 @@ def is_garbage(text):
     return any(m in low for m in GARBAGE_MARKERS)
 
 
+# Scaffolding del structured_knowledge Wikidata que el modelo NO debe
+# memorizar como plantilla (leccion canario 18-sep: regurgitacion
+# "Entity:/Properties:" y alucinaciones de entidad). Se conservan los
+# valores legibles (incluida Description) y se tiran cabeceras + P-codigo.
+
+
+def clean_sk(text):
+    lines = []
+    for ln in (text or "").splitlines():
+        s = ln.strip()
+        low = s.lower()
+        if low.startswith("description:"):
+            s = s[len("description:"):].strip()  # el valor SI es definicion
+        elif any(low.startswith(p) for p in ("entity:", "aliases:",
+                                             "properties:", "source:")):
+            continue
+        elif re.match(r"^P\d+\s*:", s):
+            continue
+        if s:
+            lines.append(s)
+    return "\n".join(lines)
+
+
 def to_record(topic, output, qid, source_url, origin):
     topic = (topic or "").strip()
-    output = (output or "").strip()
+    output = clean_sk(output).strip()
     if not topic or not output or is_garbage(output):
         return None
     if not (50 <= len(output) <= 2000):
