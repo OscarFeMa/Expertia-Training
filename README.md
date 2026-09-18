@@ -76,6 +76,19 @@ python datasets\build_expertia_swe_dataset.py
 ollama create expertia-swe -f Modelfile-ExpertiaSWE-Q4F
 ```
 
+## ✅ Definition of Done (obligatoria antes de liberar)
+
+1. Dataset ~45MB (90/10) → 2. entreno done → 3. eval: adapter <10% ppl base
+2. merge + GGUF f16 + Q4 → **5. canario guionizado 10/10 (definición + fórmula + idioma del prompt)** → 6. `ollama create` + smoke → 7. registry + HF + card.
+3. Sin puerta 5 en verde: HF queda `provisional` y el README no lo posiciona.
+
+## ⚠️ Lecciones del canario 18-sep-2026 (10 prompts × 4 modelos, raw)
+
+- Los adapters **regurgitan la plantilla de entrenamiento** (`Entity:/Properties:/Source:`) y a veces alucinan la entidad (Ohm→un cuadro). Causa: el `output` incluye el `structured_knowledge` crudo con su scaffolding.
+- **Fix para SWE**: limpiar el sk a texto definicional plano antes del build (quitar prefijos `Entity:/Description:/Properties:`, conservar valores). No entrenar nunca con el template.
+- Responden en inglés a prompts españoles sin system prompt: el canario de liberación se hace **vía Ollama (con SYSTEM + think:false)**, el raw es solo diagnóstico.
+- Veredicto electronics: **provisional** (vale para destilación con SYSTEM+think:false; no para chat directo).
+
 ## 🐤 El canario
 
 Todo modelo recién creado responde 10 preguntas fijas (definición + fórmula +
