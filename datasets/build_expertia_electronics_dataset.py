@@ -11,27 +11,11 @@ DEFAULT_OUT = r"D:\proyectos\expertia\training\datasets\expertia-electronics-pur
 SYSTEM_PROMPT = "Eres ExpertiaElectronics, electronico puro. Responde solo con definicion formal, parametros y formula cuando aplique. Sin opinion web."
 BATCH = 2000
 GARBAGE_MARKERS = ("cookie", "sign in", "captcha", "subscribe", "javascript")
-PHYS_KEEP = ("fisic", "physic", "magnitud", "magnitude", "ley", "law", "ecuaci",
-             "equation", "unidad", "unit", "constante", "constant", "quantity",
-             "quantum", "cuantic", "termo", "thermo", "mecanica", "mechanic",
-             "electromagnet", "optica", "optic", "relatividad", "relativity",
-             "particula", "particle", "si base", "formula", "teorema", "theorem",
-             "onda", "wave", "energia", "energy", "campo", "field", "atomo", "atom")
-PHYS_DROP = ("primo", "prime", "megaprimo", "integer", "entero", "graph property",
-             "concepto matem", "mathematical concept", "raiz cuadrada",
-             "square root", "conjetura", "conjecture")
 
 
 def is_garbage(text):
     low = (text or "").lower()
     return any(m in low for m in GARBAGE_MARKERS)
-
-
-def phys_ok(instance_of):
-    low = (instance_of or "").lower()
-    if any(m in low for m in PHYS_DROP):
-        return False
-    return any(m in low for m in PHYS_KEEP)
 
 
 def to_record(topic, output, qid, source_url, origin):
