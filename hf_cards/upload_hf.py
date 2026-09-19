@@ -7,14 +7,15 @@ from pathlib import Path
 TOKEN = os.environ.get("HF_TOKEN", "") or None
 USER = os.environ.get("HF_USER", "") or "OscarFeMa"
 DRY = False if (TOKEN or os.path.exists(os.path.expanduser("~/.cache/huggingface/token"))) else True
-TRAIN = Path(r"D:\proyectos\expertia\training")
+TRAIN = Path(r"F:\expertia\proyecto\training")
 
-DISK = Path(r"D:\training\merged")
+DISK = Path(r"F:\expertia\training-disk\merged")
 MODELS = [
     ("ExpertiaMath-Q4", DISK / "expertia-math-q4_k_m.gguf", TRAIN / "hf_cards" / "MODEL_ExpertiaMath.md"),
     ("ExpertiaPhysics-Q4", DISK / "expertia-physics-q4_k_m.gguf", TRAIN / "hf_cards" / "MODEL_ExpertiaPhysics.md"),
     ("ExpertiaChemistry-Q4", DISK / "expertia-chemistry-q4_k_m.gguf", TRAIN / "hf_cards" / "MODEL_ExpertiaChemistry.md"),
     ("ExpertiaElectronics-Q4", DISK / "expertia-electronics-q4_k_m.gguf", TRAIN / "hf_cards" / "MODEL_ExpertiaElectronics.md"),
+    ("ExpertiaSWE-Q4", DISK / "expertia-swe-q4_k_m.gguf", TRAIN / "hf_cards" / "MODEL_ExpertiaSWE.md"),
 ]
 ADAPTERS = [
     ("ExpertiaMath-r16", TRAIN / "adapters" / "expertia-math-r16",
@@ -25,8 +26,10 @@ ADAPTERS = [
      TRAIN / "hf_cards" / "MODEL_ExpertiaChemistry.md"),
     ("ExpertiaElectronics-r16", TRAIN / "adapters" / "expertia-electronics-r16",
      TRAIN / "hf_cards" / "MODEL_ExpertiaElectronics.md"),
+    ("ExpertiaSWE-r16", TRAIN / "adapters" / "expertia-swe-r16",
+     TRAIN / "hf_cards" / "MODEL_ExpertiaSWE.md"),
 ]
-PROJ = Path(r"D:\proyectos\expertia\training")
+PROJ = Path(r"F:\expertia\proyecto\training")
 VARIANTS = [
     ("ExpertiaMath-Q4", PROJ / "merged" / "expertia-math-f16.gguf", "expertia-math-f16.gguf", False),
     ("ExpertiaMath-Q4", PROJ / "merged" / "expertia-math-fp16", "fp16", True),
@@ -36,12 +39,15 @@ VARIANTS = [
     ("ExpertiaChemistry-Q4", DISK / "expertia-chemistry-fp16", "fp16", True),
     ("ExpertiaElectronics-Q4", DISK / "expertia-electronics-f16.gguf", "expertia-electronics-f16.gguf", False),
     ("ExpertiaElectronics-Q4", DISK / "expertia-electronics-fp16", "fp16", True),
+    ("ExpertiaSWE-Q4", DISK / "expertia-swe-f16.gguf", "expertia-swe-f16.gguf", False),
+    ("ExpertiaSWE-Q4", DISK / "expertia-swe-fp16", "fp16", True),
 ]
 DATASETS = [
     "expertia-math-puro.jsonl", "expertia-math-puro_val.jsonl",
     "expertia-physics-puro.jsonl", "expertia-physics-puro_val.jsonl",
     "expertia-chemistry-puro.jsonl", "expertia-chemistry-puro_val.jsonl",
     "expertia-electronics-puro.jsonl", "expertia-electronics-puro_val.jsonl",
+    "expertia-swe-puro.jsonl", "expertia-swe-puro_val.jsonl",
 ]
 
 if DRY:
