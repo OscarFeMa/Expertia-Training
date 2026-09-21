@@ -5,8 +5,8 @@ $root='C:\training'
 if (!(Test-Path $py)) { $py="$root\python311\python.exe" }
 if (!(Test-Path $py)) { $py=(Get-Command python -ErrorAction SilentlyContinue).Source }
 Write-Host "== 1/4 MERGE LoRA -> FP16 ==" -F Cyan
-if (!(Test-Path "$root\merge_expertia_math.py")) { try { Invoke-WebRequest http://192.168.1.42:8000/merge_expertia_math.py -OutFile "$root\merge_expertia_math.py" -UseBasicParsing } catch { Copy-Item "D:\proyectos\expertia\training\merge_expertia_math.py" "$root\merge_expertia_math.py" -Force -ErrorAction SilentlyContinue } }
-& $py "$root\merge_expertia_math.py"
+if (!(Test-Path "$root\merge_expertia.py")) { try { Invoke-WebRequest http://192.168.1.42:8000/merge_expertia.py -OutFile "$root\merge_expertia.py" -UseBasicParsing } catch { Copy-Item "D:\proyectos\expertia\training\merge_expertia.py" "$root\merge_expertia.py" -Force -ErrorAction SilentlyContinue } }
+& $py "$root\merge_expertia.py" --domain math
 if ($LASTEXITCODE -ne 0) { throw "merge failed $LASTEXITCODE" }
 Write-Host "== 2/4 GGUF F16 ==" -F Cyan
 $llama="$root\llama.cpp"
