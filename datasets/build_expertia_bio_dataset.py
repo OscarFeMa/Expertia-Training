@@ -86,6 +86,8 @@ def load_raw():
         seen.add(("t", (label or "").strip().lower()))
 
     for name, origin in (("se_biology.jsonl", "se_biology"),
+                         ("se_bioinformatics.jsonl", "se_bioinformatics"),
+                         ("se_medicalsciences.jsonl", "se_medicalsciences"),
                          ("wb_bio.jsonl", "wbsearch_bio"),
                          ("taxa_bio.jsonl", "sparql_taxa")):
         f = RAW / name
