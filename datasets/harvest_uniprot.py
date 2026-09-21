@@ -39,12 +39,12 @@ def get(params):
 
 
 def next_cursor(link):
-    for part in link.split(","):
-        if 'rel="next"' in part:
-            u = part.split(";")[0].strip().strip("<>")
-            q = urllib.parse.parse_qs(urllib.parse.urlparse(u).query)
-            return q.get("cursor", [None])[0]
-    return None
+    import re
+    m = re.search(r'<([^>]*)>\s*;\s*rel="next"', link or "")
+    if not m:
+        return None
+    q = urllib.parse.parse_qs(urllib.parse.urlparse(m.group(1)).query)
+    return q.get("cursor", [None])[0]
 
 
 def clean(t):
