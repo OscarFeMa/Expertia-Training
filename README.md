@@ -57,8 +57,8 @@ Modelos verificados hoy:
 
 ```powershell
 # 1. Harvest (local, con key de StackApps para no sufrir throttle)
-python datasets\harvest_se_physics.py 60 1 stackoverflow TU_KEY
-python datasets\harvest_wiki_physics.py 12000 "Category:Software engineering" wiki_swe.jsonl
+python datasets\harvest_se.py 60 1 stackoverflow TU_KEY
+python datasets\harvest_wiki.py 12000 "Category:Software engineering" wiki_swe.jsonl
 
 # 2. Auditor (3070, juez phi-4 8-bit, matable y reanudable)
 #    -> C:\training\logs\audit_swe.jsonl  (umbral: score >= 6)
@@ -115,7 +115,7 @@ el commit no sale. Así de simple.
 
 ## 🗺️ Mapa rápido
 
-- `train_expertia_math.py` — el entrenador (QLoRA r16, sirve para todos).
+- `train_expertia.py` — el entrenador (QLoRA r16, sirve para todos).
 - `datasets/` — harvesters + builders por dominio.
 - `merge_expertia_*.py` — fusión adapter→fp16.
 - `Run-*.cmd` — cadena post-entreno en el 3070 (merge/eval/gguf).

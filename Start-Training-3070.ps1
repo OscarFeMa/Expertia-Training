@@ -23,7 +23,7 @@ $cmdLines = @(
   "setlocal",
   "set TRAIN_STATUS_FILE=C:\training\logs\train_status.json",
   "set PYTHONUNBUFFERED=1",
-  "C:\training\python311\python.exe -u C:\training\train_expertia_math.py --model C:\training\base\phi-4-mini-reasoning --train C:\training\datasets\$Dataset --out C:\training\adapters\$Adapter --offload C:\training\offload --epochs 3 --seq-len $SeqLen --batch 1 --accum 16 --bf16 --save-steps 200 > C:\training\logs\train_physics.log 2> C:\training\logs\train_physics.err.log"
+  "C:\training\python311\python.exe -u C:\training\train_expertia.py --model C:\training\base\phi-4-mini-reasoning --train C:\training\datasets\$Dataset --out C:\training\adapters\$Adapter --offload C:\training\offload --epochs 3 --seq-len $SeqLen --batch 1 --accum 16 --bf16 --save-steps 200 > C:\training\logs\train_physics.log 2> C:\training\logs\train_physics.err.log"
 )
 $cmdText = $cmdLines -join "`r`n"
 Set-Content "D:\proyectos\expertia\training\Run-Physics.cmd" -Value $cmdText -Encoding ascii
@@ -34,9 +34,15 @@ $dl = {
     (Get-CimInstance Win32_Process -Filter "ProcessId=$($_.Id)" -ErrorAction SilentlyContinue).CommandLine -like "*train_expertia*"
   }
   if ($alive) { Write-Host "YA HAY ENTRENO VIVO, no se duplica"; return }
-  schtasks /Create /TN "ExpertiaTrainPhysics" /TR "C:\training\Run-Physics.cmd" /SC ONCE /ST 23:59 /RU SYSTEM /F
+  # One-shot sin cita-trampa: programa a +2min con /Z y borra tras verificar arranque.
+  # (/SC ONCE /ST 23:59 + /Run dejaba la cita viva: el /Run no la consume y re-dispara a las 23:59.)
+  $st = (Get-Date).AddMinutes(2).ToString('HH:mm')
+  schtasks /Create /TN "ExpertiaTrainPhysics" /TR "C:\training\Run-Physics.cmd" /SC ONCE /ST $st /RU SYSTEM /Z /F
   schtasks /Run /TN "ExpertiaTrainPhysics"
-  Write-Host "tarea lanzada"
+  Start-Sleep -Seconds 60
+  $up = Get-CimInstance Win32_Process -Filter "Name='python.exe'" -ErrorAction SilentlyContinue | Where-Object { $_.CommandLine -like "*train_expertia*" }
+  if ($up) { schtasks /Delete /TN "ExpertiaTrainPhysics" /F; Write-Host "tarea lanzada y eliminada (one-shot consumido)" }
+  else { Write-Host "AVISO: sin proceso tras 60s, tarea conservada para inspeccion" }
 }
 Remote $dl $HttpBase
 Start-Sleep -Seconds 75
