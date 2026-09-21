@@ -89,7 +89,9 @@ def load_raw():
                          ("se_bioinformatics.jsonl", "se_bioinformatics"),
                          ("se_medicalsciences.jsonl", "se_medicalsciences"),
                          ("wb_bio.jsonl", "wbsearch_bio"),
-                         ("taxa_bio.jsonl", "sparql_taxa")):
+                         ("taxa_bio.jsonl", "sparql_taxa"),
+                         ("uniprot_bio.jsonl", "uniprot_bio"),
+                         ("pubmed_bio.jsonl", "pubmed_bio")):
         f = RAW / name
         if not f.exists():
             print("WARN falta %s" % name)
