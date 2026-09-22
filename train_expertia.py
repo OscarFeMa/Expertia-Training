@@ -15,6 +15,34 @@ from trl import SFTTrainer
 
 STATUS_FILE = Path(os.environ.get("TRAIN_STATUS_FILE", r"D:\proyectos\expertia\training\logs\train_status.json"))
 
+# Identidad del entreno (adapter/dataset/filas): la rellena main() al arrancar;
+# StatusCallback la incluye en cada payload para que el panel muestre QUÉ se
+# entrena sin adivinarlo por rutas fijas.
+_IDENTITY = {}
+
+
+def _build_identity(train_arg, out_arg):
+    ident = {}
+    try:
+        train_p = Path(train_arg)
+        ident["dataset_file"] = train_p.name
+        ident["adapter"] = Path(out_arg).name
+        n_train = 0
+        with open(train_p, encoding="utf-8", errors="ignore") as f:
+            for _ in f:
+                n_train += 1
+        ident["dataset_train"] = n_train
+        val_p = train_p.with_name(train_p.stem + "_val.jsonl")
+        n_val = 0
+        if val_p.exists():
+            with open(val_p, encoding="utf-8", errors="ignore") as f:
+                for _ in f:
+                    n_val += 1
+        ident["dataset_val"] = n_val
+    except Exception as e:
+        logger.debug("identidad entreno fallo: %s", e)
+    return ident
+
 
 class StatusCallback(TrainerCallback):
     def __init__(self):
@@ -59,6 +87,7 @@ class StatusCallback(TrainerCallback):
                 "loss_history": self.history,
                 "ts": time.time(),
             }
+            payload.update(_IDENTITY)
             STATUS_FILE.write_text(json.dumps(payload), encoding="utf-8")
         except Exception as e:
             logger.debug("escritura train_status fallo: %s", e)
@@ -102,6 +131,9 @@ def main():
     out_dir = Path(args.out)
     out_dir.mkdir(parents=True, exist_ok=True)
     Path(args.offload).mkdir(parents=True, exist_ok=True)
+    global _IDENTITY
+    _IDENTITY = _build_identity(args.train, args.out)
+    print(json.dumps({"entreno": _IDENTITY}, ensure_ascii=False), flush=True)
 
     bnb = BitsAndBytesConfig(
         load_in_4bit=True,
@@ -171,7 +203,7 @@ def main():
     trainer.add_callback(StatusCallback())
     try:
         STATUS_FILE.parent.mkdir(parents=True, exist_ok=True)
-        STATUS_FILE.write_text(json.dumps({"phase": "starting", "step": 0, "ts": time.time()}), encoding="utf-8")
+        STATUS_FILE.write_text(json.dumps({"phase": "starting", "step": 0, "ts": time.time(), **_IDENTITY}), encoding="utf-8")
     except Exception as e:
         logger.debug("train_status starting fallo: %s", e)
     resume = None
@@ -180,12 +212,12 @@ def main():
         if ckpts:
             resume = str(ckpts[-1])
     try:
-        STATUS_FILE.write_text(json.dumps({"phase": "resuming" if resume else "starting", "step": 0, "resume_from": resume, "ts": time.time()}), encoding="utf-8")
+        STATUS_FILE.write_text(json.dumps({"phase": "resuming" if resume else "starting", "step": 0, "resume_from": resume, "ts": time.time(), **_IDENTITY}), encoding="utf-8")
     except Exception as e:
         logger.debug("train_status resume/starting fallo: %s", e)
     trainer.train(resume_from_checkpoint=resume)
     try:
-        STATUS_FILE.write_text(json.dumps({"phase": "done", "step": trainer.state.global_step, "ts": time.time()}), encoding="utf-8")
+        STATUS_FILE.write_text(json.dumps({"phase": "done", "step": trainer.state.global_step, "ts": time.time(), **_IDENTITY}), encoding="utf-8")
     except Exception as e:
         logger.debug("train_status done fallo: %s", e)
     trainer.save_model(str(out_dir))
