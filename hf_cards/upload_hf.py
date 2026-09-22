@@ -16,6 +16,8 @@ MODELS = [
     ("ExpertiaChemistry-Q4", DISK / "expertia-chemistry-q4_k_m.gguf", TRAIN / "hf_cards" / "MODEL_ExpertiaChemistry.md"),
     ("ExpertiaElectronics-Q4", DISK / "expertia-electronics-q4_k_m.gguf", TRAIN / "hf_cards" / "MODEL_ExpertiaElectronics.md"),
     ("ExpertiaSWE-Q4", DISK / "expertia-swe-q4_k_m.gguf", TRAIN / "hf_cards" / "MODEL_ExpertiaSWE.md"),
+    ("ExpertiaDataScience-Q4", DISK / "expertia-datascience-q4_k_m.gguf", TRAIN / "hf_cards" / "MODEL_ExpertiaDataScience.md"),
+    ("ExpertiaBio-Q4", DISK / "expertia-bio-q4_k_m.gguf", TRAIN / "hf_cards" / "MODEL_ExpertiaBio.md"),
 ]
 ADAPTERS = [
     ("ExpertiaMath-r16", TRAIN / "adapters" / "expertia-math-r16",
@@ -28,6 +30,10 @@ ADAPTERS = [
      TRAIN / "hf_cards" / "MODEL_ExpertiaElectronics.md"),
     ("ExpertiaSWE-r16", TRAIN / "adapters" / "expertia-swe-r16",
      TRAIN / "hf_cards" / "MODEL_ExpertiaSWE.md"),
+    ("ExpertiaDataScience-r16", TRAIN / "adapters" / "expertia-datascience-r16",
+     TRAIN / "hf_cards" / "MODEL_ExpertiaDataScience.md"),
+    ("ExpertiaBio-r16", TRAIN / "adapters" / "expertia-bio-r16",
+     TRAIN / "hf_cards" / "MODEL_ExpertiaBio.md"),
 ]
 PROJ = Path(r"F:\expertia\proyecto\training")
 VARIANTS = [
@@ -41,6 +47,10 @@ VARIANTS = [
     ("ExpertiaElectronics-Q4", DISK / "expertia-electronics-fp16", "fp16", True),
     ("ExpertiaSWE-Q4", DISK / "expertia-swe-f16.gguf", "expertia-swe-f16.gguf", False),
     ("ExpertiaSWE-Q4", DISK / "expertia-swe-fp16", "fp16", True),
+    ("ExpertiaDataScience-Q4", DISK / "expertia-datascience-f16.gguf", "expertia-datascience-f16.gguf", False),
+    ("ExpertiaDataScience-Q4", DISK / "expertia-datascience-fp16", "fp16", True),
+    ("ExpertiaBio-Q4", DISK / "expertia-bio-f16.gguf", "expertia-bio-f16.gguf", False),
+    ("ExpertiaBio-Q4", DISK / "expertia-bio-fp16", "fp16", True),
 ]
 DATASETS = [
     "expertia-math-puro.jsonl", "expertia-math-puro_val.jsonl",
@@ -48,6 +58,8 @@ DATASETS = [
     "expertia-chemistry-puro.jsonl", "expertia-chemistry-puro_val.jsonl",
     "expertia-electronics-puro.jsonl", "expertia-electronics-puro_val.jsonl",
     "expertia-swe-puro.jsonl", "expertia-swe-puro_val.jsonl",
+    "expertia-datascience-puro.jsonl", "expertia-datascience-puro_val.jsonl",
+    "expertia-bio-puro.jsonl", "expertia-bio-puro_val.jsonl",
 ]
 
 if DRY:
