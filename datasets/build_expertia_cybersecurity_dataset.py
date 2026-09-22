@@ -14,11 +14,20 @@ SYSTEM_PROMPT = "Eres ExpertiaCybersecurity, experto en ciberseguridad puro. Res
 BATCH = 2000
 AUDIT_MIN = 6
 GARBAGE_MARKERS = ("cookie", "sign in", "captcha", "subscribe", "javascript")
+# Sopa de metadatos de articulos scholarly (Wikidata): no son definiciones y el
+# modelo las regurgita como plantilla (canario DS 7/10, Q3-Q5). Se descartan.
+METADATA_MARKERS = ("scientific article published", "language of work",
+                    "instance of: http", "author: Q", "source url: http")
 
 
 def is_garbage(text):
     low = (text or "").lower()
     return any(m in low for m in GARBAGE_MARKERS)
+
+
+def is_metadata_soup(text):
+    low = (text or "").lower()
+    return any(m in low for m in METADATA_MARKERS)
 
 
 # Scaffolding del structured_knowledge Wikidata que el modelo NO debe
@@ -47,7 +56,7 @@ def clean_sk(text):
 def to_record(topic, output, qid, source_url, origin):
     topic = (topic or "").strip()
     output = clean_sk(output).strip()
-    if not topic or not output or is_garbage(output):
+    if not topic or not output or is_garbage(output) or is_metadata_soup(output):
         return None
     if not (50 <= len(output) <= 2000):
         return None
