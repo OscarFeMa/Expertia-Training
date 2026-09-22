@@ -1,4 +1,4 @@
-FROM F:\expertia\training-disk\merged\expertia-swe-q4_k_m.gguf
+FROM F:\expertia\training-disk\merged_real\expertia-swe-q4_k_m.gguf
 PARAMETER temperature 0.1
 PARAMETER top_p 0.9
 PARAMETER repeat_penalty 1.1

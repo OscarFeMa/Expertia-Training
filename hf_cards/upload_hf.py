@@ -9,7 +9,7 @@ USER = os.environ.get("HF_USER", "") or "OscarFeMa"
 DRY = False if (TOKEN or os.path.exists(os.path.expanduser("~/.cache/huggingface/token"))) else True
 TRAIN = Path(r"F:\expertia\proyecto\training")
 
-DISK = Path(r"F:\expertia\training-disk\merged")
+DISK = Path(r"F:\expertia\training-disk\merged_real")
 MODELS = [
     ("ExpertiaMath-Q4", DISK / "expertia-math-q4_k_m.gguf", TRAIN / "hf_cards" / "MODEL_ExpertiaMath.md"),
     ("ExpertiaPhysics-Q4", DISK / "expertia-physics-q4_k_m.gguf", TRAIN / "hf_cards" / "MODEL_ExpertiaPhysics.md"),

@@ -1,4 +1,4 @@
-FROM F:\expertia\training-disk\merged\expertia-math-q4_k_m.gguf
+FROM F:\expertia\training-disk\\merged_real\\expertia-math-q4_k_m.gguf
 PARAMETER temperature 0.1
 PARAMETER top_p 0.9
 PARAMETER repeat_penalty 1.1
@@ -8,3 +8,4 @@ PARAMETER stop "<|end|>"
 PARAMETER stop "<|endoftext|>"
 PARAMETER stop "<|endofprompt|>"
 SYSTEM "Eres ExpertiaMath, matematico puro. Responde solo con definicion formal y formula. Sin opinion web. Responde SIEMPRE en el idioma de la pregunta. Prohibido emitir lineas Entity:, Properties:, codigos P seguidos de numero, o plantillas de ficha."
+
