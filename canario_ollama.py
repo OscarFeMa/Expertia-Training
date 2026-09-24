@@ -32,11 +32,76 @@ PROMPTS = {
         "¿Qué es el sistema inmune adaptativo? Componentes.",
         "Define cadena trófica con un ejemplo.",
     ],
+    "math": [
+        "Define número primo y da un ejemplo.",
+        "¿Qué es una ecuación de segundo grado? Fórmula de resolución.",
+        "Define integral definida: fórmula y significado.",
+        "¿Qué es un límite? Definición intuitiva y notación.",
+        "Define matriz identidad y sus propiedades.",
+        "¿Qué es el teorema de Pitágoras? Fórmula.",
+        "Define derivada: fórmula del cociente incremental.",
+        "¿Qué es un número irracional? Ejemplos.",
+        "Define logaritmo: propiedades básicas.",
+        "¿Qué es una serie geométrica? Fórmula de la suma.",
+    ],
+    "physics": [
+        "Ley de Ohm: fórmula y parámetros.",
+        "Define la segunda ley de Newton: fórmula.",
+        "¿Qué es la energía cinética? Fórmula.",
+        "Define longitud de onda y frecuencia: relación.",
+        "¿Qué es la ley de gravitación universal? Fórmula.",
+        "Define el principio de conservación de la energía.",
+        "¿Qué es un campo electromagnético? Componentes.",
+        "Define entropía en termodinámica.",
+        "¿Qué es el efecto fotoeléctrico? Ecuación.",
+        "Define momento lineal: fórmula.",
+    ],
+    "chemistry": [
+        "Define mol: número de Avogadro.",
+        "¿Qué es un enlace covalente? Ejemplo.",
+        "Define pH: fórmula.",
+        "¿Qué es una reacción de oxidación-reducción? Ejemplo.",
+        "Define la tabla periódica: grupos y periodos.",
+        "¿Qué es un ácido según Brönsted-Lowry?",
+        "Define enlace iónico con un ejemplo.",
+        "¿Qué es la estequiometría? Explica su uso.",
+        "Define isótopo con ejemplos.",
+        "¿Qué es un catalizador? ¿Se consume?",
+    ],
+    "electronics": [
+        "Ley de Ohm: fórmula y parámetros.",
+        "¿Qué es un transistor? Tipos básicos.",
+        "Define resistencia y su unidad.",
+        "¿Qué es un diodo? Función.",
+        "Define condensador: fórmula de capacidad.",
+        "¿Qué es un circuito en serie vs paralelo?",
+        "Define ley de Kirchhoff de corrientes.",
+        "¿Qué es un amplificador operacional? Usos.",
+        "Define impedancia en corriente alterna.",
+        "¿Qué es una puerta lógica AND? Tabla de verdad.",
+    ],
+    "swe": [
+        "Define complejidad ciclomática.",
+        "¿Qué es un test unitario? Propiedades.",
+        "Define recursión con un ejemplo mínimo.",
+        "¿Qué es un índice en bases de datos? Ventajas.",
+        "Define API REST: principios.",
+        "¿Qué es Big-O? Ejemplos O(n) y O(n log n).",
+        "Define control de versiones: para qué sirve.",
+        "¿Qué es un deadlock? Condiciones.",
+        "Define función pura en programación funcional.",
+        "¿Qué es integración continua? Prácticas.",
+    ],
 }
 
 SYSTEMS = {
     "datascience": "Eres ExpertiaDataScience, cientifico de datos puro. Responde solo con definicion formal, parametros y ejemplo minimo cuando aplique. Sin opinion web. Responde SIEMPRE en el idioma de la pregunta. Prohibido emitir lineas Entity:, Properties:, codigos P seguidos de numero, o plantillas de ficha.",
     "bio": "Eres ExpertiaBiology, biologo puro. Responde solo con definicion formal, parametros y ejemplo cuando aplique. Sin opinion web. Responde SIEMPRE en el idioma de la pregunta. Prohibido emitir lineas Entity:, Properties:, codigos P seguidos de numero, o plantillas de ficha.",
+    "math": "Eres ExpertiaMath, matematico puro. Responde solo con definicion formal y formula. Sin opinion web. Responde SIEMPRE en el idioma de la pregunta. Prohibido emitir lineas Entity:, Properties:, codigos P seguidos de numero, o plantillas de ficha.",
+    "physics": "Eres ExpertiaPhysics, fisico puro. Responde solo con definicion formal y formula cuando aplique. Sin opinion web. Responde SIEMPRE en el idioma de la pregunta. Prohibido emitir lineas Entity:, Properties:, codigos P seguidos de numero, o plantillas de ficha.",
+    "chemistry": "Eres ExpertiaChemistry, quimico puro. Responde solo con definicion formal y formula cuando aplique. Sin opinion web. Responde SIEMPRE en el idioma de la pregunta. Prohibido emitir lineas Entity:, Properties:, codigos P seguidos de numero, o plantillas de ficha.",
+    "electronics": "Eres ExpertiaElectronics, electronico puro. Responde solo con definicion formal, parametros y formula cuando aplique. Sin opinion web. Responde SIEMPRE en el idioma de la pregunta. Prohibido emitir lineas Entity:, Properties:, codigos P seguidos de numero, o plantillas de ficha.",
+    "swe": "Eres ExpertiaSoftwareEngineering, ingeniero de software puro. Responde solo con definicion formal, parametros y ejemplo minimo cuando aplique. Sin opinion web. Responde SIEMPRE en el idioma de la pregunta. Prohibido emitir lineas Entity:, Properties:, codigos P seguidos de numero, o plantillas de ficha.",
 }
 
 ES_STOP = {"el", "la", "los", "las", "que", "una", "para", "con", "como", "esta", "este", "son", "del"}
@@ -62,6 +127,8 @@ def flags(answer, prompt):
     low = a.lower()
     if "entity:" in low or "properties:" in low:
         f.append("PLANTILLA")
+    if re.search(r"(?m)^source:\s*(\d+\s*){2,}", a) or re.search(r"(?m)^source:\s*https?://", a):
+        f.append("SOURCE-STUB")
     import re
     toks = re.findall(r"[a-záéíóúñ]+", low)
     es = sum(1 for t in toks if t in ES_STOP)

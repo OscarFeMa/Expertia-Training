@@ -14,11 +14,19 @@ SYSTEM_PROMPT = "Eres ExpertiaSoftwareEngineering, ingeniero de software puro. R
 BATCH = 2000
 AUDIT_MIN = 6
 GARBAGE_MARKERS = ("cookie", "sign in", "captcha", "subscribe", "javascript")
+# Sopa de metadatos scholarly: se descarta (canario DS 7/10).
+METADATA_MARKERS = ("scientific article published", "language of work",
+                    "instance of: http", "author: Q", "source url: http")
 
 
 def is_garbage(text):
     low = (text or "").lower()
     return any(m in low for m in GARBAGE_MARKERS)
+
+
+def is_metadata_soup(text):
+    low = (text or "").lower()
+    return any(m in low for m in METADATA_MARKERS)
 
 
 # Scaffolding del structured_knowledge Wikidata que el modelo NO debe
@@ -47,7 +55,7 @@ def clean_sk(text):
 def to_record(topic, output, qid, source_url, origin):
     topic = (topic or "").strip()
     output = clean_sk(output).strip()
-    if not topic or not output or is_garbage(output):
+    if not topic or not output or is_garbage(output) or is_metadata_soup(output):
         return None
     if not (50 <= len(output) <= 2000):
         return None
@@ -56,7 +64,7 @@ def to_record(topic, output, qid, source_url, origin):
         "system": SYSTEM_PROMPT,
         "instruction": instruction[:300],
         "input": "",
-        "output": ("%s\nSource: %s" % (output, source_url or ""))[:2000],
+        "output": output[:2000],
         "metadata": {"domain": "SoftwareEngineering", "qid": qid, "source_url": source_url, "origin": origin},
     }
 

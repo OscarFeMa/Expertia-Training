@@ -50,7 +50,7 @@ def to_record(topic, output, qid, source_url, origin):
         "system": SYSTEM_PROMPT,
         "instruction": instruction[:300],
         "input": "",
-        "output": ("%s\nSource: %s" % (output, source_url or ""))[:2000],
+        "output": output[:2000],
         "metadata": {"domain": "Biology", "qid": qid, "source_url": source_url, "origin": origin},
     }
 
