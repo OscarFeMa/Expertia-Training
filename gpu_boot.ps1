@@ -3,6 +3,7 @@
 $Log = "C:\training\logs\gpu_boot.log"
 function L($m) { Add-Content $Log "$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') $m" }
 L "=== gpu boot tune ==="
+Start-Sleep -Seconds 120
 try {
   $r = nvidia-smi -pm 1 2>&1 | Out-String
   L ("persistencia: " + $r.Trim())
