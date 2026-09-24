@@ -17,7 +17,9 @@ GARBAGE_MARKERS = ("cookie", "sign in", "captcha", "subscribe", "javascript")
 # Sopa de metadatos de articulos scholarly (Wikidata): no son definiciones y el
 # modelo las regurgita como plantilla (canario DS 7/10, Q3-Q5). Se descartan.
 METADATA_MARKERS = ("scientific article published", "language of work",
-                    "instance of: http", "author: Q", "source url: http")
+                    "instance of:", "author: Q", "source url:",
+                    "country of origin", "official website", "inception: +",
+                    "subclass of:", "taxon rank:")
 
 
 def is_garbage(text):

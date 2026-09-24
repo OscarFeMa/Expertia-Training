@@ -14,11 +14,20 @@ SYSTEM_PROMPT = "Eres ExpertiaBiology, biologo puro. Responde solo con definicio
 BATCH = 2000
 AUDIT_MIN = 6
 GARBAGE_MARKERS = ("cookie", "sign in", "captcha", "subscribe", "javascript")
+METADATA_MARKERS = ("scientific article published", "language of work",
+                    "instance of:", "author: Q", "source url:",
+                    "country of origin", "official website", "inception: +",
+                    "subclass of:", "taxon rank:")
 
 
 def is_garbage(text):
     low = (text or "").lower()
     return any(m in low for m in GARBAGE_MARKERS)
+
+
+def is_metadata_soup(text):
+    low = (text or "").lower()
+    return any(m in low for m in METADATA_MARKERS)
 
 
 def clean_sk(text):
@@ -41,7 +50,7 @@ def clean_sk(text):
 def to_record(topic, output, qid, source_url, origin):
     topic = (topic or "").strip()
     output = clean_sk(output).strip()
-    if not topic or not output or is_garbage(output):
+    if not topic or not output or is_garbage(output) or is_metadata_soup(output):
         return None
     if not (50 <= len(output) <= 2000):
         return None

@@ -13,7 +13,9 @@ BATCH = 2000
 GARBAGE_MARKERS = ("cookie", "sign in", "captcha", "subscribe", "javascript")
 # Sopa de metadatos scholarly: se descarta (canario DS 7/10).
 METADATA_MARKERS = ("scientific article published", "language of work",
-                    "instance of: http", "author: Q", "source url: http")
+                    "instance of:", "author: Q", "source url:",
+                    "country of origin", "official website", "inception: +",
+                    "subclass of:", "taxon rank:")
 PHYS_KEEP = ("fisic", "physic", "magnitud", "magnitude", "ley", "law", "ecuaci",
              "equation", "unidad", "unit", "constante", "constant", "quantity",
              "quantum", "cuantic", "termo", "thermo", "mecanica", "mechanic",
