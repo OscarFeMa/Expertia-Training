@@ -24,10 +24,10 @@ Fine-tuned from `microsoft/Phi-4-mini-reasoning` (MIT) with QLoRA r16 on ~53k pa
 
 |  | Perplexity |
 |---|---|
-| Base | TBD |
-| + adapter | TBD |
+| Base | 524.8 |
+| + adapter | 10.0 (-98.1%) |
 
-Canary (10 fixed prompts via Ollama): pending.
+Canary (10 fixed prompts vía Ollama, 24-sep): pendiente.
 
 ## Variants in this repo
 
