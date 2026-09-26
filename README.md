@@ -1,5 +1,11 @@
 # 🧠 Expertia-Training — el criadero de especialistas
 
+> ## ⏸️ Pausa temporal del proyecto (26-sep-2026)
+> El desarrollo de Expertia queda en **pausa temporal de duración por determinar**.
+> **No es un cierre ni un abandono**: la granja de entreno entra en hibernación y el
+> trabajo se retomará (cola pendiente: DSv2 → physics → chemistry → swe → cyber;
+> math/electronics, pendientes de más fuentes). Gracias por el interés.
+
 > *Un experto no se programa. Se destila, se evalúa, se somete a canario y,
 > solo entonces, se libera.*
 
