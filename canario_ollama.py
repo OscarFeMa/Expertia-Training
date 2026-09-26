@@ -4,6 +4,7 @@ Deja transcript + auto-flags (plantilla, idioma, vacio). Veredicto final: humano
 """
 import argparse
 import json
+import re
 import urllib.request
 from pathlib import Path
 
@@ -129,7 +130,6 @@ def flags(answer, prompt):
         f.append("PLANTILLA")
     if re.search(r"(?m)^source:\s*(\d+\s*){2,}", a) or re.search(r"(?m)^source:\s*https?://", a):
         f.append("SOURCE-STUB")
-    import re
     toks = re.findall(r"[a-záéíóúñ]+", low)
     es = sum(1 for t in toks if t in ES_STOP)
     en = sum(1 for t in toks if t in EN_STOP)
