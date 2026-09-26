@@ -47,7 +47,8 @@ def to_record(topic, output, qid, source_url, origin):
 
 def load_raw(limit_each=15000):
     recs, seen = [], set()
-    for name, origin in (("ti_parts.jsonl", "ti_datasheet"), ("se_electronics.jsonl", "se_electronics")):
+    for name, origin in (("ti_parts.jsonl", "ti_datasheet"), ("se_electronics.jsonl", "se_electronics"),
+                         ("se_arduino.jsonl", "se_arduino"), ("se_raspberrypi.jsonl", "se_raspberrypi")):
         f = RAW / name
         if not f.exists():
             continue
@@ -112,6 +113,27 @@ def fetch_db_batch(db_path, max_id, batch):
         con.close()
 
 
+
+
+def _take_build_lock():
+    """Evita dos builds concurrentes del mismo dataset (corrompen la salida):
+    lock con PID vivo; si el dueno murio, se reclama."""
+    import os as _os
+    lock = Path(__file__).parent / ("." + Path(__file__).stem + ".lock")
+    if lock.exists():
+        try:
+            old = int(lock.read_text(encoding="utf-8").strip())
+            _os.kill(old, 0)
+            print("lock: otro build vivo PID %d, exit." % old)
+            raise SystemExit(0)
+        except SystemExit:
+            raise
+        except Exception:
+            pass
+    lock.write_text(str(_os.getpid()), encoding="utf-8")
+    import atexit
+    atexit.register(lambda: lock.exists() and lock.unlink())
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--limit", type=int, default=50000)
@@ -120,6 +142,7 @@ def main():
     p.add_argument("--db", default=DEFAULT_DB)
     p.add_argument("--out", default=DEFAULT_OUT)
     args = p.parse_args()
+    _take_build_lock()
     recs, seen = load_raw()
     print("raw recs: %d" % len(recs))
     max_id, scanned = None, 0
