@@ -171,6 +171,8 @@ def main():
                 break
         if len(recs) % 5000 < BATCH:
             print("collected=%d scanned=%d" % (len(recs), scanned))
+        if scanned > args.limit * 200:
+            break
     print("TOTAL collected=%d scanned=%d" % (len(recs), scanned))
     rnd = random.Random(args.seed)
     rnd.shuffle(recs)
