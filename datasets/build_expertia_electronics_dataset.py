@@ -48,7 +48,8 @@ def to_record(topic, output, qid, source_url, origin):
 def load_raw(limit_each=15000):
     recs, seen = [], set()
     for name, origin in (("ti_parts.jsonl", "ti_datasheet"), ("se_electronics.jsonl", "se_electronics"),
-                         ("se_arduino.jsonl", "se_arduino"), ("se_raspberrypi.jsonl", "se_raspberrypi")):
+                         ("se_arduino.jsonl", "se_arduino"), ("se_raspberrypi.jsonl", "se_raspberrypi"),
+                         ("arduino_hf.jsonl", "arduino_hf")):
         f = RAW / name
         if not f.exists():
             continue
